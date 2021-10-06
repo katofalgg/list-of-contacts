@@ -24,17 +24,13 @@ export const reducer = (state: IState | undefined = initialState, action: IActio
             state = [...state, action.payload];
             return state;
         case DELETE_CONTACT:
-            const contactFilter = state.filter((contact) =>
-                contact.id === action.payload.id ? null : contact
-            );
+            const contactFilter = state.filter(contact => contact.id !== action.payload.id);
             state = contactFilter;
             return state;
         case UPDATE_CONTACT:
-            const contactUpdate = state.filter((contact) =>
-                contact.id === action.payload.id
-                    ? Object.assign(contact, action.payload)
-                    : contact
-            );
+            const contactUpdate = state.map(contact => contact.id === action.payload.id
+                ? Object.assign(contact, action.payload)
+                : contact)
             state = contactUpdate;
             return state
         default:
